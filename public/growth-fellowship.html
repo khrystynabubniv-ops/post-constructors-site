@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Universe Growth Fellowship · конструктор поста</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Unbounded:wght@500;600&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✍️</text></svg>">
+<style>
+:root {
+  --paper: #f4f5f7; --surface: #ffffff; --ink: #161b26; --muted: #636b7a;
+  --line: #e1e4ea; --accent: #3b3fd8; --accent-ink: #ffffff; --tag: #eef0f4;
+  --display: 'Unbounded', 'Golos Text', system-ui, sans-serif;
+  --text: 'Golos Text', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #11141b; --surface: #1a1e28; --ink: #e9ecf2; --muted: #9aa1b0;
+    --line: #2a3040; --accent: #8c90ff; --accent-ink: #11141b; --tag: #242a37;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #11141b; --surface: #1a1e28; --ink: #e9ecf2; --muted: #9aa1b0;
+  --line: #2a3040; --accent: #8c90ff; --accent-ink: #11141b; --tag: #242a37;
+  color-scheme: dark;
+}
+:root { box-sizing: border-box; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+*, *::before, *::after { box-sizing: inherit; }
+html, body { margin: 0; }
+body { background: var(--paper); color: var(--ink); font: 400 16px/1.6 var(--text); -webkit-font-smoothing: antialiased; }
+main { max-width: 760px; margin: 0 auto; padding: 3.5rem 1.25rem 5rem; }
+h1 { font: 600 clamp(1.8rem, 5vw, 2.6rem)/1.15 var(--display); letter-spacing: -0.02em; margin: 0 0 1.25rem; }
+h2 { font: 600 1.15rem/1.3 var(--display); margin: 3rem 0 1rem; }
+.intro p { margin: 0 0 0.9rem; color: var(--muted); max-width: 64ch; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.1rem 1.25rem 1.25rem; margin-top: 1rem; }
+.panel h3 { font: 600 0.95rem/1.3 var(--text); margin: 0; }
+.panel .hint { font-size: 0.82rem; color: var(--muted); margin: 0.15rem 0 0.8rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.chip { font: 500 0.88rem/1 var(--text); padding: 0.6rem 0.95rem; border-radius: 999px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); cursor: pointer; }
+.chip:hover { border-color: var(--muted); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chip:disabled { opacity: 0.4; cursor: not-allowed; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.5rem; }
+button { font: inherit; cursor: pointer; }
+.btn { font: 600 0.92rem/1 var(--text); padding: 0.95rem 1.3rem; border-radius: 10px; border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+.btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.btn.small { padding: 0.6rem 0.9rem; font-size: 0.85rem; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#results { margin-top: 2rem; display: grid; gap: 1rem; }
+.empty { text-align: center; color: var(--muted); padding: 2.5rem 1rem; border: 1px dashed var(--line); border-radius: 12px; }
+.post { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 1.25rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 0.9rem; }
+.tag { font-size: 0.78rem; background: var(--tag); color: var(--muted); padding: 0.25rem 0.6rem; border-radius: 6px; }
+.post-text { white-space: pre-wrap; overflow-wrap: anywhere; margin: 0; font: inherit; }
+.post-foot { display: flex; align-items: center; gap: 0.5rem; margin-top: 1.1rem; flex-wrap: wrap; }
+.count { margin-left: auto; font-size: 0.8rem; color: var(--muted); }
+.creatives { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; }
+.creative { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+.creative img { width: 100%; max-width: 100%; display: block; aspect-ratio: 4 / 5; object-fit: cover; background: var(--tag); }
+.creative .cap { padding: 0.75rem 0.9rem 0.25rem; font-size: 0.88rem; }
+.creative a { margin: 0.5rem 0.9rem 0.9rem; font-size: 0.85rem; color: var(--accent); font-weight: 600; text-decoration: none; }
+.creative a:hover { text-decoration: underline; }
+.post-creatives { margin-top: 1.1rem; padding-top: 1rem; border-top: 1px solid var(--line); }
+.post-creatives h4 { font: 600 0.85rem/1.3 var(--text); margin: 0 0 0.6rem; }
+.post-creatives .creatives { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 0.6rem; }
+.post-creatives .creative .cap { font-size: 0.8rem; padding: 0.5rem 0.6rem 0; }
+.post-creatives .creative a { margin: 0.35rem 0.6rem 0.6rem; font-size: 0.8rem; }
+.creative .noimg { aspect-ratio: 4 / 5; display: grid; place-items: center; background: var(--tag); color: var(--muted); font-size: 0.8rem; padding: 0.5rem; text-align: center; }
+.toast { position: fixed; left: 50%; bottom: calc(1.5rem + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); background: var(--ink); color: var(--paper); padding: 0.7rem 1.1rem; border-radius: 8px; font-size: 0.9rem; opacity: 0; pointer-events: none; transition: opacity .2s; }
+.toast.show { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .toast { transition: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1 id="title"></h1>
+  <div class="intro" id="intro"></div>
+
+  <section class="panel" id="voice-panel" hidden>
+    <h3>Хто пише</h3>
+    <p class="hint">Обери, з якої позиції ти розповідаєш</p>
+    <div class="chips" id="voices"></div>
+  </section>
+
+  <section class="panel">
+    <h3>Тип гачка</h3>
+    <p class="hint">Залиш порожнім, щоб використати всі типи</p>
+    <div class="chips" id="types"></div>
+  </section>
+
+  <section class="panel">
+    <h3>Акцент</h3>
+    <p class="hint">До двох одночасно. Залиш порожнім, щоб використати всі</p>
+    <div class="chips" id="accents"></div>
+  </section>
+
+  <div class="actions">
+    <button class="btn primary" id="gen3">Згенерувати 3 варіанти</button>
+    <button class="btn" id="gen1">Згенерувати випадковий текст</button>
+  </div>
+
+  <div id="results" aria-live="polite"><p class="empty">Тут з’являться тексти</p></div>
+
+  <section id="creatives-section" hidden>
+    <h2>Усі креативи</h2>
+    <div class="creatives" id="creatives"></div>
+  </section>
+</main>
+<div class="toast" id="toast" role="status"></div>
+
+<script type="application/json" id="campaign-data">{"slug": "growth-fellowship", "title": "Universe Growth Fellowship", "intro": ["Universe запустив Growth Fellowship — оплачувану тримісячну програму, де учасники разом із leadership team проходять повний цикл запуску нового tech-продукту. За результатами можна отримати офер на позицію Growth Manager.", "Ми шукаємо людей, які вже запускали власні продукти чи стартапи, і найкраще їх знаходять через знайомих. Твій пост може стати для когось тим самим наступним рівнем. Обери тип гачка й акцент — конструктор збере для тебе текст, який можна скопіювати й доповнити своїми словами."], "hook_types": [{"id": "fact", "name": "Неочевидний факт"}, {"id": "question", "name": "Провокативне питання"}, {"id": "pain", "name": "Біль аудиторії"}, {"id": "insight", "name": "Інсайт з досвіду"}], "accents": [{"id": "leadership", "name": "Робота з leadership"}, {"id": "product", "name": "Реальний продукт у портфоліо"}, {"id": "path", "name": "Шлях у Universe"}, {"id": "ai", "name": "AI-native"}], "hooks": [{"id": "h1", "hook_type": "fact", "text": "Кожні два тижні — чекпоінт з leadership Universe, і так три місяці поспіль. Набір на таку програму зараз відкритий."}, {"id": "h2", "hook_type": "fact", "text": "В Universe з’явилася оплачувана програма, де за три місяці можна пройти повний цикл запуску нового tech-продукту."}, {"id": "h3", "hook_type": "fact", "text": "Для участі в новій програмі Universe не потрібен досвід у продуктовому IT. Потрібен досвід запуску чогось свого."}, {"id": "h4", "hook_type": "question", "text": "Що далі, якщо за плечима вже є власний продукт, а тепер хочеться побачити, як це роблять у компанії з мільйонами користувачів?"}, {"id": "h5", "hook_type": "question", "text": "Скільки часу потрібно, щоб пройти шлях від пошуку ринкової можливості до продукту, готового до виходу на ринок?"}, {"id": "h6", "hook_type": "question", "text": "Що можна зробити за три місяці щоденної роботи з CEO tech-компанії?"}, {"id": "h7", "hook_type": "pain", "text": "Стартап закрився, а досвід запуску лишився. І часто незрозуміло, де він справді знадобиться."}, {"id": "h8", "hook_type": "pain", "text": "Буває, що досвіду власних проєктів уже багато, а під класичну вакансію він ніяк не вкладається."}, {"id": "h9", "hook_type": "insight", "text": "Найшвидше в продукті ростуть ті, хто вже щось запускав сам і знає ціну помилки. На цьому й побудована наша нова програма."}, {"id": "h10", "hook_type": "insight", "text": "В Universe є вислів «рівень Universe». Для мене це про амбітні задачі й людей, поруч з якими хочеться рости."}], "bodies": [{"id": "b1", "accents": ["leadership"], "text": "Universe Growth Fellowship — оплачувана програма на три місяці, де учасники щодня працюють разом із CEO та Strategy & Growth Lead Universe.\n\nНе на дистанції й не раз на місяць, а в постійному контакті: разом обговорюють задачі, рішення й результати.\n\nЦе рідкісна можливість побачити зсередини, як будуються глобальні tech-продукти, і вчитися не з кейсів, а з реальних рішень."}, {"id": "b2", "accents": ["leadership"], "text": "У Universe Growth Fellowship прогрес не оцінюють «колись наприкінці». Кожні два тижні учасник проходить чекпоінт з leadership: обговорює результати й отримує фідбек за пройдений етап.\n\nПродовження участі напряму залежить від результатів. Звучить вимогливо, але саме такий ритм дає змогу швидко рости.\n\nЦе дуже схоже на те, як ми працюємо всередині: висока планка і чесна розмова про результат."}, {"id": "b3", "accents": ["leadership", "path"], "text": "Шлях у Universe Growth Fellowship теж побудований навколо роботи з leadership. Після AI-інтерв’ю, розмови з рекрутером і тестового завдання кандидат знайомиться зі Strategy & Growth Lead, а фінальна розмова — з CEO Universe.\n\nТестове не теоретичне: треба створити прототип продукту й показати, як ідея перетворюється на робоче рішення.\n\nМені подобається, що відбір перевіряє саме те, чим доведеться займатися на програмі."}, {"id": "b4", "accents": ["product"], "text": "Universe Growth Fellowship — це повний цикл запуску нового tech-продукту разом із leadership team Universe.\n\nСпочатку дослідження ринку й пошук, де новий продукт може вирости. Потім перевірка гіпотез: які ідеї варто запускати, а які ні. Далі — робота над рішенням, готовим до виходу на ринок.\n\nПаралельно учасники опановують основи product management і growth за матеріалами для самостійної підготовки та з підтримкою менторів."}, {"id": "b5", "accents": ["product"], "text": "Головне, з чим учасник виходить з Universe Growth Fellowship, — досвід запуску tech-продукту і результат, який можна показати.\n\nНе сертифікат і не конспект лекцій, а продукт, над яким три місяці працювали разом із leadership team.\n\nДля тих, хто вже запускав власні проєкти, це наступний рівень: той самий драйв, але в компанії, продуктами якої щодня користуються мільйони людей."}, {"id": "b6", "accents": ["product", "ai"], "text": "У Universe Growth Fellowship шукають людей, які вже щось запускали: власний продукт, стартап чи іншу ініціативу. Досвід у продуктовому IT при цьому не обов’язковий.\n\nТакі люди вже вміють брати відповідальність за результат і швидко адаптуватися. А програма дає повний цикл запуску tech-продукту поруч із leadership team і менторами.\n\nЩе одна умова — AI-native підхід: AI вже частина щоденної роботи, а не тема для експериментів раз на місяць."}, {"id": "b7", "accents": ["product"], "text": "Universe Growth Fellowship створена для тих, хто вже пробував будувати щось своє. Стартап, власний продукт, ініціатива — будь-який досвід запуску тут має вагу.\n\nЗа три місяці учасники проходять шлях від пошуку ринкової можливості до продукту, готового до виходу на ринок. З перевіркою гіпотез, чесним фідбеком і підтримкою менторів.\n\nЯ щиро вірю, що такий досвід не губиться. Йому просто потрібне середовище, де він зможе вирости."}, {"id": "b8", "accents": ["path"], "text": "За результатами Universe Growth Fellowship учасник може отримати job offer на позицію Growth Manager в Universe.\n\nПрограма триває три місяці: повна зайнятість, онлайн, оплачувана. Тобто це робота над реальним продуктом з можливістю залишитися в команді.\n\nУ 2026 році Universe став роботодавцем №1 за версією Forbes і посів друге місце в рейтингу DOU. Всередині ми називаємо цю планку «рівнем Universe»."}, {"id": "b9", "accents": ["path"], "text": "Universe Growth Fellowship проходить онлайн, тож долучитися можна з будь-якої країни, якщо різниця з київським часом не перевищує двох годин. Мова програми — українська.\n\nПодаватися можна, навіть якщо ти ще навчаєшся: графік адаптують під заняття й іспити. І навіть якщо зараз працюєш full-time: головне — давати програмі стільки часу й енергії, скільки потребує повна зайнятість, і показувати результат на чекпоінтах.\n\nФіксованого дедлайну немає: заявки розглядають постійно, а учасники стартують індивідуально після відбору."}, {"id": "b10", "accents": ["path", "leadership"], "text": "Відбір в Universe Growth Fellowship має кілька етапів: AI-інтерв’ю, розмова з рекрутером, тестове завдання з прототипом продукту, інтерв’ю зі Strategy & Growth Lead і фінальна 30-хвилинна розмова з CEO Universe.\n\nДалі — запрошення на програму й узгодження дати старту.\n\nА після трьох місяців — можливість отримати пропозицію приєднатися до команди Universe на позицію Growth Manager."}, {"id": "b11", "accents": ["path"], "text": "У Universe Growth Fellowship шукають людей з досвідом запуску власних продуктів, стартапів чи інших ініціатив. Тих, хто бере відповідальність за результат, проявляє ініціативу і швидко адаптується до нових викликів.\n\nЩе кілька умов: навчання в топовому українському чи європейському університеті або вища освіта, англійська від B2 і AI-native підхід до роботи.\n\nВагомою перевагою буде комерційний досвід в інвестиційному банкінгу, консалтингу, VC, аналітиці, великих корпораціях чи продуктовому IT."}, {"id": "b12", "accents": ["ai"], "text": "Universe Growth Fellowship — програма для AI-native людей. Тих, для кого AI вже частина щоденної роботи і хто постійно шукає нові способи застосовувати його до задач.\n\nНа програмі учасники отримують доступ до AI-інструментів і бюджет на них, щоб швидше перевіряти гіпотези та будувати продукт.\n\nНавіть тестове під час відбору — це прототип продукту. Мені подобається, що AI тут не модне слово, а інструмент, яким реально працюють."}, {"id": "b13", "accents": ["ai", "product"], "text": "У Universe Growth Fellowship швидкість перевірки гіпотез — одна з ключових навичок. Тому учасники отримують доступ до AI-інструментів і бюджет на них.\n\nЗа три місяці треба знайти ринкову можливість, з’ясувати, які ідеї варто запускати, і довести рішення до готовності виходу на ринок. AI допомагає пройти цей шлях швидше і з більшою кількістю спроб.\n\nДля тих, хто вже будував щось своє з AI під рукою, це знайоме відчуття — тільки в масштабі компанії з мільйонами користувачів."}, {"id": "b14", "accents": ["ai"], "text": "Одна з умов Universe Growth Fellowship — бути AI-native. Тобто AI має бути частиною твоєї щоденної роботи, і ти постійно шукаєш нові способи застосовувати його до задач.\n\nЦе логічно: на програмі учасники разом із leadership team шукають, перевіряють і будують новий tech-продукт, а AI-інструменти й бюджет на них дають змогу робити це швидше.\n\nУ команді ми любимо виклики, і цей формат саме про них."}, {"id": "b15", "accents": ["leadership", "product"], "text": "Universe — IT-компанія, продуктами якої щодня користуються мільйони людей у всьому світі. І тепер у нас є Universe Growth Fellowship: три місяці, щоб пройти повний цикл запуску нового tech-продукту поруч із CEO та Strategy & Growth Lead.\n\nДослідження ринку, перевірка гіпотез, робота над рішенням — з щоденним менторством і чекпоінтами кожні два тижні.\n\nДля мене це про те, як росте рівень Universe: сильним людям дають простір і задачі, з якими хочеться рости."}], "endings": [{"id": "e1", "text": "Деталі програми й заявка — тут: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e2", "text": "Якщо впізнаєш себе в цьому описі, заявку можна подати тут: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e3", "text": "Знаєте когось, хто запускав власний стартап і шукає наступний виклик? Поділіться з ним цим постом. Деталі: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e4", "text": "Заявки розглядають постійно, фіксованого дедлайну немає. Подати заявку можна тут: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e5", "text": "Якщо є питання про Universe чи програму — пишіть у коментарях або в особисті. Деталі й заявка: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e6", "text": "А який власний проєкт навчив вас найбільше? Поділіться в коментарях 👇\n\nПро програму: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e7", "text": "Dare to challenge yourself? We’re in.\n\nUniverse Growth Fellowship: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e8", "text": "Поділіться постом з тим, кому зараз тісно в межах власного проєкту. Можливо, це і є наступний рівень: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e9", "text": "Етапи відбору, умови й відповіді на часті питання — на сайті програми: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship\n\n#Universe #GrowthFellowship"}, {"id": "e10", "text": "Переходь на наступний рівень: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e11", "text": "Цікаво, хто з моєї мережі вже запускав щось своє. Відгукніться в коментарях, а деталі програми — тут: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e12", "text": "Програма оплачувана, онлайн, українською. Усе інше — на сайті: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e13", "text": "Якщо ти вже будуєш продукти з AI і хочеш робити це поруч із leadership tech-компанії, заявка тут: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e14", "text": "Кидаєш виклик собі? Ми приймаємо.\n\nhttps://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e15", "text": "Позначте в коментарях людину, якій це може бути цікаво. Посилання на програму: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e16", "text": "За стелею — новий рівень. Universe Growth Fellowship: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship\n\n#Universe #ProductManagement #Growth"}, {"id": "e17", "text": "Які навички, на вашу думку, найважливіші для запуску нового продукту? Цікаво почитати думки в коментарях.\n\nА про програму можна дізнатися тут: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e18", "text": "Твій виклик — наш виклик. Подати заявку на Universe Growth Fellowship: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e19", "text": "Набір відкритий, а старт індивідуальний — одразу після відбору. Деталі: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}, {"id": "e20", "text": "Я пишаюся, що в Universe з’являються такі програми. Якщо вона для вас — ось посилання: https://unieducation.co/?utm_source=linkedin&utm_medium=employee_post&utm_campaign=growth_fellowship"}], "voices": [], "creatives": []}</script>
+<script>
+(function () {
+  const D = JSON.parse(document.getElementById('campaign-data').textContent);
+  const $ = (id) => document.getElementById(id);
+  const typeName = Object.fromEntries(D.hook_types.map((t) => [t.id, t.name]));
+  const accentName = Object.fromEntries(D.accents.map((a) => [a.id, a.name]));
+  const voiceName = Object.fromEntries((D.voices || []).map((v) => [v.id, v.name]));
+  const hasVoices = (D.voices || []).length > 1;
+
+  const state = { voice: hasVoices ? D.voices[0].id : null, types: new Set(), accents: new Set(), used: new Set() };
+
+  $('title').textContent = D.title;
+  for (const p of D.intro) { const el = document.createElement('p'); el.textContent = p; $('intro').appendChild(el); }
+
+  function chip(label, pressed, onClick) {
+    const b = document.createElement('button');
+    b.className = 'chip'; b.type = 'button'; b.textContent = label;
+    b.setAttribute('aria-pressed', String(pressed));
+    b.addEventListener('click', () => onClick(b));
+    return b;
+  }
+
+  function renderChips() {
+    if (hasVoices) {
+      $('voice-panel').hidden = false;
+      $('voices').replaceChildren(...D.voices.map((v) => chip(v.name, state.voice === v.id, () => {
+        state.voice = v.id; state.used.clear(); renderChips();
+      })));
+    }
+    $('types').replaceChildren(...D.hook_types.map((t) => chip(t.name, state.types.has(t.id), () => {
+      state.types.has(t.id) ? state.types.delete(t.id) : state.types.add(t.id); renderChips();
+    })));
+    const full = state.accents.size >= 2;
+    $('accents').replaceChildren(...D.accents.map((a) => {
+      const on = state.accents.has(a.id);
+      const c = chip(a.name, on, () => {
+        on ? state.accents.delete(a.id) : state.accents.add(a.id); renderChips();
+      });
+      if (full && !on) { c.disabled = true; c.title = 'Можна обрати до двох акцентів'; }
+      return c;
+    }));
+  }
+
+  const forVoice = (b) => !b.voices || b.voices.length === 0 || !state.voice || b.voices.includes(state.voice);
+  function pools(useFilters) {
+    return {
+      hooks: D.hooks.filter((h) => forVoice(h) && (!useFilters || state.types.size === 0 || state.types.has(h.hook_type))),
+      bodies: D.bodies.filter((b) => forVoice(b) && (!useFilters || state.accents.size === 0 || b.accents.some((a) => state.accents.has(a)))),
+      endings: D.endings.filter(forVoice),
+    };
+  }
+
+  const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
+  function combos(n, useFilters) {
+    const p = pools(useFilters);
+    if (!p.hooks.length || !p.bodies.length || !p.endings.length) return null;
+    const total = p.hooks.length * p.bodies.length * p.endings.length;
+    const out = [], local = new Set();
+    for (let tries = 0; out.length < n && tries < 500; tries++) {
+      const h = pick(p.hooks), b = pick(p.bodies), e = pick(p.endings);
+      const key = h.id + b.id + e.id;
+      if (local.has(key) || (state.used.has(key) && state.used.size < total)) continue;
+      local.add(key); state.used.add(key);
+      out.push({ h, b, e });
+    }
+    return out;
+  }
+
+  function toast(msg) {
+    const t = $('toast'); t.textContent = msg; t.classList.add('show');
+    clearTimeout(toast.timer); toast.timer = setTimeout(() => t.classList.remove('show'), 1800);
+  }
+
+  async function copy(text) {
+    try { await navigator.clipboard.writeText(text); }
+    catch {
+      const ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove();
+    }
+    toast('Скопійовано');
+  }
+
+  function download(text) {
+    const url = URL.createObjectURL(new Blob([text], { type: 'text/plain;charset=utf-8' }));
+    const a = document.createElement('a'); a.href = url; a.download = (D.slug || 'post') + '.txt';
+    document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
+
+  const creatives = D.creatives || [];
+  function tile(c) {
+    const el = document.createElement('div'); el.className = 'creative';
+    if (c.kind !== 'link' && c.preview) {
+      const img = document.createElement('img'); img.src = c.preview; img.alt = c.caption || 'Креатив'; img.loading = 'lazy';
+      img.referrerPolicy = 'no-referrer';
+      img.addEventListener('error', () => {
+        const ph = document.createElement('div'); ph.className = 'noimg'; ph.textContent = 'Превʼю недоступне — файл можна завантажити';
+        img.replaceWith(ph);
+      });
+      el.appendChild(img);
+    }
+    const cap = document.createElement('div'); cap.className = 'cap'; cap.textContent = c.caption || '';
+    const a = document.createElement('a'); a.href = c.href || c.src;
+    if (c.kind === 'link') { a.textContent = 'Відкрити'; a.target = '_blank'; a.rel = 'noopener'; }
+    else {
+      a.textContent = 'Завантажити';
+      if (c.drive_id) { a.target = '_blank'; a.rel = 'noopener'; } else { a.download = c.filename || 'creative'; }
+    }
+    el.append(cap, a);
+    return el;
+  }
+  function creativesFor(h, b) {
+    const keys = new Set([h.hook_type, ...b.accents]);
+    const matched = creatives.filter((c) => (c.tags || []).some((t) => keys.has(t)));
+    return matched.length ? matched : creatives.filter((c) => !c.tags || c.tags.length === 0);
+  }
+
+  function card({ h, b, e }) {
+    const text = [h.text, b.text, e.text].map((s) => s.trim()).join('\n\n');
+    const el = document.createElement('article'); el.className = 'post';
+    const tags = document.createElement('div'); tags.className = 'tags';
+    const names = [typeName[h.hook_type], ...b.accents.map((a) => accentName[a])];
+    if (hasVoices && state.voice) names.unshift(voiceName[state.voice]);
+    for (const n of names) { const t = document.createElement('span'); t.className = 'tag'; t.textContent = n; tags.appendChild(t); }
+    const body = document.createElement('p'); body.className = 'post-text'; body.textContent = text;
+    const foot = document.createElement('div'); foot.className = 'post-foot';
+    const c = document.createElement('button'); c.className = 'btn primary small'; c.textContent = 'Скопіювати';
+    c.addEventListener('click', () => copy(text));
+    const d = document.createElement('button'); d.className = 'btn small'; d.textContent = 'Завантажити .txt';
+    d.addEventListener('click', () => download(text));
+    const n = document.createElement('span'); n.className = 'count'; n.textContent = text.length + ' символів';
+    foot.append(c, d, n);
+    el.append(tags, body, foot);
+    const cs = creativesFor(h, b);
+    if (cs.length) {
+      const wrap = document.createElement('div'); wrap.className = 'post-creatives';
+      const t = document.createElement('h4'); t.textContent = 'Креативи до цього поста';
+      const grid = document.createElement('div'); grid.className = 'creatives';
+      grid.replaceChildren(...cs.map(tile));
+      wrap.append(t, grid); el.appendChild(wrap);
+    }
+    return el;
+  }
+
+  function show(n, useFilters) {
+    const list = combos(n, useFilters);
+    const box = $('results');
+    if (!list) {
+      const p = document.createElement('p'); p.className = 'empty';
+      p.textContent = 'Для такого поєднання текстів немає. Зніми один з фільтрів.';
+      box.replaceChildren(p); return;
+    }
+    box.replaceChildren(...list.map(card));
+    box.firstElementChild.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+  }
+
+  $('gen3').addEventListener('click', () => show(3, true));
+  $('gen1').addEventListener('click', () => show(1, false));
+
+  if (D.creatives && D.creatives.length) {
+    $('creatives-section').hidden = false;
+    $('creatives').replaceChildren(...D.creatives.map(tile));
+  }
+
+  renderChips();
+})();
+</script>
+</body>
+</html>
